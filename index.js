@@ -8,6 +8,15 @@
 
 // console.log(sum);
 
-require('./batman');
+// require('./batman');
 
-require('./superman');
+// require('./superman');
+
+const superHero = require('./super-hero');
+console.log(superHero.getName());
+superHero.setName("Superman"); 
+console.log(superHero.getName(''));
+
+const NewSuperHero = require('./super-hero');
+console.log(NewSuperHero.getName());
+
