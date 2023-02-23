@@ -8,4 +8,3 @@
     console.log(message, superHero);
 }) ('Hey');
 
-console.log("ssss");
