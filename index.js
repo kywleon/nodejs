@@ -94,22 +94,31 @@
 // higherOrderFunction(greet);
 
 //Event Module - 21
-const EventEmitter = require("node:events");
+// const EventEmitter = require("node:events");
 
-const emitter = new EventEmitter();
+// const emitter = new EventEmitter();
 
-emitter.on("order-pizza" , (size,topping) => {
-    console.log(`Order received! Baking a ${size} pizza with ${topping}`);
-});
+// emitter.on("order-pizza" , (size,topping) => {
+//     console.log(`Order received! Baking a ${size} pizza with ${topping}`);
+// });
 
-emitter.on("order-pizza", (size) => {
-    if(size === "large"){
-        console.log("Serving complimentary drink");
-    }else{
-        console.log('Not this option');
-    }
-});
+// emitter.on("order-pizza", (size) => {
+//     if(size === "large"){
+//         console.log("Serving complimentary drink");
+//     }else{
+//         console.log('Not this option');
+//     }
+// });
 
-console.log('Do work before event occurs in the system');
+// console.log('Do work before event occurs in the system');
 
-emitter.emit('order-pizza','large','mushroom');
+// emitter.emit('order-pizza','large','mushroom');
+
+//Extending from EventEmitter
+
+const PizzaShop = require('./pizza-shop');
+
+const pizzaShop = new PizzaShop();
+
+pizzaShop.order();
+pizzaShop.displayOrderNumber();
