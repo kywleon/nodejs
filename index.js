@@ -114,19 +114,104 @@
 
 // emitter.emit('order-pizza','large','mushroom');
 
+/*-------------------------------------------------------*/
+
 //Extending from EventEmitter 22
 
-const PizzaShop = require('./pizza-shop');
-const DrinkMachine = require('./drink-machine');
+// const PizzaShop = require('./pizza-shop');
+// const DrinkMachine = require('./drink-machine');
 
-const pizzaShop = new PizzaShop();
-const drinkMachine = new DrinkMachine();
+// const pizzaShop = new PizzaShop();
+// const drinkMachine = new DrinkMachine();
  
-pizzaShop.on('order',(size,topping) => {
-    console.log(`Order received! Baking a ${size} pizza with ${topping}`);
-    drinkMachine.serveDrink(size)
-});
-console.log('babi');
+// pizzaShop.on('order',(size,topping) => {
+//     console.log(`Order received! Baking a ${size} pizza with ${topping}`);
+//     drinkMachine.serveDrink(size)
+// });
+// console.log('babi');
 
-pizzaShop.order('large','mushrooms');
-pizzaShop.displayOrderNumber();
+// pizzaShop.order('large','mushrooms');
+// pizzaShop.displayOrderNumber();
+
+/*-------------------------------------------------------*/
+
+/* buffer - 24 */
+// const buffer = new Buffer.from("Vishwas");
+
+// buffer.write("Code");
+
+// console.log(buffer.toString());
+// console.log(buffer);
+// console.log(buffer.toJSON());
+
+/* ------------------------------------------------------- */
+
+/* Tutorial fs module - */
+
+// const fs = require('node:fs');
+
+// console.log('First');
+// const fileContents = fs.readFileSync('./file.txt' , 'utf-8');
+// console.log(fileContents);
+
+// console.log('Second');
+// /* this function receive two parameter is error and data */
+// fs.readFile('./file.txt', 'utf-8' , (error , data) => {
+//     if(error){
+//         console.log(error + ' error');
+//     } else {
+//         console.log(data + ' data');
+//     }
+// });
+
+// console.log('Third');
+
+// fs.writeFileSync('./greet.txt' , "Hello world!");
+
+// fs.writeFile('./greet.txt' , " Hello Vishwas!" , { flag: 'a' } , (err) => {
+//      if (err) {
+//         console.log(err);
+//      } else {
+//         console.log("File written");
+//      }
+// });
+
+/* ------------------------------------------------------- */
+/* Tutorial fs promise module - */
+// const fs = require('node:fs/promises');
+
+// console.log('First');
+
+// fs.readFile('./file.txt','utf-8')
+// .then(data => console.log(data))
+// .catch((error) => console.log(error));
+
+// console.log("Second");
+
+// async function readFile() {
+//     try {
+//         const data = await fs.readFile('file.txt','utf-8');
+//         console.log(data);
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+
+// readFile();
+
+/* ------------------------------------------------------- */
+/* Tutorial Streams - 28  */
+
+const fs = require('node:fs');
+
+const readableStream = fs.createReadStream('./file.txt' , {
+    encoding: "utf-8",
+    highWaterMark: 2,
+});
+
+const writeableStream = fs.createWriteStream("./file2.txt");
+
+readableStream.on('data' , (chunk) => {
+    console.log(chunk);
+    writeableStream.write(chunk);
+})
