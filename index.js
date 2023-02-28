@@ -202,25 +202,89 @@
 /* ------------------------------------------------------- */
 /* Tutorial Streams - 28  */
 
-const fs = require('node:fs');
+// const fs = require('node:fs');
 
-const zlib = require('node:zlib');
+// const zlib = require('node:zlib');
 
-const gzip = zlib.createGzip();
+// const gzip = zlib.createGzip();
 
-const readableStream = fs.createReadStream('./file.txt' , {
-    encoding: "utf-8",
-    highWaterMark: 2,
-});
+// const readableStream = fs.createReadStream('./file.txt' , {
+//     encoding: "utf-8",
+//     highWaterMark: 2,
+// });
 
-readableStream.pipe(gzip).pipe(fs.WriteStream('./file2.txt.gz'))
+// readableStream.pipe(gzip).pipe(fs.WriteStream('./file2.txt.gz'))
 
-const writeableStream = fs.createWriteStream("./file2.txt");
+// const writeableStream = fs.createWriteStream("./file2.txt");
 
-readableStream.pipe(writeableStream);
+// readableStream.pipe(writeableStream);
 
 
 // readableStream.on('data' , (chunk) => {
 //     console.log(chunk);
 //     writeableStream.write(chunk);
 // })
+
+/* ------------------------------------------------------- */
+/* Tutorial - Creating a Node Server - 31,32,33,34  */
+
+// const http = require('node:http');
+// const fs = require('node:fs');
+
+// /* This code for response any incoming request */
+// const server = http.createServer((req ,res) => {
+
+//     const superHero = {
+//         firstName: "Bruce",
+//         lastName: "Wayne",
+//     };
+
+//     const name = 'Vishwas';
+
+//     /* Way 1 */
+//     let html = fs.readFileSync('./index.php', 'utf-8');
+//     html = html.replace("{{name}}", name)
+//     res.writeHead(200, { 'content-Type' : 'text/html'});
+//     res.end(html);
+//     // res.end(JSON.stringify(superHero));
+// });
+
+// /* 3000 port number  */
+// server.listen(3000 , () => {
+//     console.log("Server running on port 3000");
+// })
+
+/* ------------------------------------------------------- */
+/* Tutorial - HTTP Routing - 35 */
+
+const http = require('node:http');
+const fs = require('node:fs');
+
+/* This code for response any incoming request */
+const server = http.createServer((req ,res) => {
+
+    //req.method GET POST PUT DELETE
+    const superHero = {
+        firstName: "Bruce",
+        lastName: "Wayne",
+    };
+
+    if (req.url === "/") {
+        res.writeHead(200, { "Content-Type": "text/plain" });
+        res.end("Home page");
+    } else if(req.url === "/about"){
+        res.writeHead(200, { "Content-Type": "text/plain" });
+        res.end("About page");
+    } else if(req.url === "/api"){
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(superHero));
+    } else {
+        res.writeHead(404);
+        res.end("Page not Found");
+    }
+});
+
+/* 3000 port number  */
+server.listen(3000 , () => {
+    console.log("Server running on port 3000");
+})
