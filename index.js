@@ -257,34 +257,87 @@
 /* ------------------------------------------------------- */
 /* Tutorial - HTTP Routing - 35 */
 
-const http = require('node:http');
-const fs = require('node:fs');
+// const http = require('node:http');
+// const fs = require('node:fs');
 
-/* This code for response any incoming request */
-const server = http.createServer((req ,res) => {
+// /* This code for response any incoming request */
+// const server = http.createServer((req ,res) => {
 
-    //req.method GET POST PUT DELETE
-    const superHero = {
-        firstName: "Bruce",
-        lastName: "Wayne",
-    };
+//     //req.method GET POST PUT DELETE
+//     const superHero = {
+//         firstName: "Bruce",
+//         lastName: "Wayne",
+//     };
 
-    if (req.url === "/") {
-        res.writeHead(200, { "Content-Type": "text/plain" });
-        res.end("Home page");
-    } else if(req.url === "/about"){
-        res.writeHead(200, { "Content-Type": "text/plain" });
-        res.end("About page");
-    } else if(req.url === "/api"){
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify(superHero));
-    } else {
-        res.writeHead(404);
-        res.end("Page not Found");
-    }
-});
+//     if (req.url === "/") {
+//         res.writeHead(200, { "Content-Type": "text/plain" });
+//         res.end("Home page");
+//     } else if(req.url === "/about"){
+//         res.writeHead(200, { "Content-Type": "text/plain" });
+//         res.end("About page");
+//     } else if(req.url === "/api"){
+//         res.writeHead(200, { "Content-Type": "application/json" });
+//         res.end(JSON.stringify(superHero));
+//     } else {
+//         res.writeHead(404);
+//         res.end("Page not Found");
+//     }
+// });
 
-/* 3000 port number  */
-server.listen(3000 , () => {
-    console.log("Server running on port 3000");
-})
+// /* 3000 port number  */
+// server.listen(3000 , () => {
+//     console.log("Server running on port 3000");
+// })
+
+/* ------------------------------------------------------- */
+/* Tutorial - Thread Pool - 39 */
+// const fs = require('node:fs');
+
+// console.log("First");
+
+// fs.readFile("./file.txt" , 'utf-8' ,(err, data) => {
+//     console.log("File Contents");
+// })
+
+// console.log("Last");
+
+// const crypto = require('node:crypto');
+// const OS = require('os')
+
+// console.log("CPU cores: ",OS.cpus().length)
+// // process.env.UV_THREADPOOL_SIZE = OS.cpus().length
+// process.env.UV_THREADPOOL_SIZE = 8;
+// //const MAX_CALLS = OS.cpus().length;
+// const MAX_CALLS = 16;
+
+
+// const start = Date.now();
+// for (let i = 0; i < MAX_CALLS; i++) {
+//   crypto.pbkdf2('password', 'salt', 10000, 512, 'sha512', () => {
+//     console.log(`Hash: ${i + 1} `, Date.now() - start);
+//   });
+// }
+
+// const start = Date.now();
+// crypto.pbkdf2Sync("password", 'salt', 100000 , 512 , 'sha512');
+// crypto.pbkdf2Sync("password", 'salt', 100000 , 512 , 'sha512');
+// crypto.pbkdf2Sync("password", 'salt', 100000 , 512 , 'sha512');
+// console.log("Hash: " , Date.now() - start);
+
+/* ------------------------------------------------------- */
+/* Tutorial - Network I/O - 41*/
+
+const https = require('node:https');
+
+const MAX_CALLS = 16;
+
+const start = Date.now();
+for (let i = 0; i < MAX_CALLS; i++) {
+    https.request("https://www.google.com" , (res) => {
+        res.on("data" , () => {});
+        res.on("end" ,() => {
+            console.log(`Request: ${i + 1}`, Date.now() - start);
+        });
+    })
+    .end();
+}
