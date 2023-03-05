@@ -327,17 +327,224 @@
 /* ------------------------------------------------------- */
 /* Tutorial - Network I/O - 41*/
 
-const https = require('node:https');
+// const https = require('node:https');
 
-const MAX_CALLS = 16;
+// const MAX_CALLS = 12;
 
-const start = Date.now();
-for (let i = 0; i < MAX_CALLS; i++) {
-    https.request("https://www.google.com" , (res) => {
-        res.on("data" , () => {});
-        res.on("end" ,() => {
-            console.log(`Request: ${i + 1}`, Date.now() - start);
-        });
-    })
-    .end();
-}
+// const start = Date.now();
+// for (let i = 0; i < MAX_CALLS; i++) {
+//     https.request("https://www.google.com" , (res) => {
+//         res.on("data" , () => {});
+//         res.on("end" , () => {
+//             console.log(`Request: ${i + 1}`, Date.now() - start);
+//         });
+//     })
+//     .end();
+// }
+
+/* ------------------------------------------------------- */
+/* Tutorial -  Microtask Queues - 43*/
+
+/* Experiment 1 */
+// console.log("Console.log 1");
+// process.nextTick(() => console.log("this is process.next 1")); 
+// console.log("Console.log 2");
+
+/* Experiment 2 */
+// Promise.resolve().then( () => console.log("this is promise function"));
+// process.nextTick( () => console.log("this is process.nextTick 1"));
+
+/* Experiment 3  */
+
+// process.nextTick( () => console.log("this is process.nextTick 1"));
+// process.nextTick( () => {
+//     console.log("this is process.nextTick 2");
+//     process.nextTick( () => {
+//         console.log("this is the inner next tick inside next tick");
+//     })
+// });
+// process.nextTick( () => console.log("this is process.nextTick 3"));
+
+// Promise.resolve().then( () => console.log("this is Promise.resolve 1"));
+// Promise.resolve().then( () => {
+//     console.log("this is Promise.resolve 2");
+//     process.nextTick( () => {
+//         console.log("this is the inner next tick inside Promise then block")
+//     });
+// });
+
+// Promise.resolve().then( () => console.log("this is Promise.resolve 3"));
+
+/* ------------------------------------------------------- */
+/* Experiment 4 - Timer Queue - 44  */
+
+// setTimeout(() => {
+//     console.log('this is setTimeout 1');
+// }, 1000);
+// setTimeout(() => {
+//     console.log('this is setTimeout 2');
+// }, 500);
+// setTimeout(() => {
+//     console.log('this is setTimeout 3');
+// }, 0);
+// setTimeout(() => {
+//     console.log('this is setTimeout 1');
+// }, 0);
+// setTimeout(() => {
+//     console.log('this is setTimeout 2');
+//     process.nextTick( () => {
+//         console.log("this is the inner next tick inside setTimeout");
+//     })
+// }, 0);
+// setTimeout(() => {
+//     console.log('this is setTimeout 3');
+// }, 0);
+
+// process.nextTick( () => console.log("this is process.nextTick 1"));
+// process.nextTick( () => {
+//     console.log("this is process.nextTick 2");
+//     process.nextTick( () => {
+//         console.log("this is the inner next tick inside next tick");
+//     })
+// });
+// process.nextTick( () => console.log("this is process.nextTick 3"));
+
+// Promise.resolve().then( () => console.log("this is Promise.resolve 1"));
+// Promise.resolve().then( () => {
+//     console.log("this is Promise.resolve 2");
+//     process.nextTick( () => {
+//         console.log("this is the inner next tick inside Promise then block")
+//     });
+// });
+// Promise.resolve().then( () => console.log("this is Promise.resolve 3"));
+
+
+/* ------------------------------------------------------- */
+/* Experiment 6 -  I/O Queue - 45  */
+// const fs = require('fs');
+
+
+// fs.readFile(__filename , () => {
+//     console.log('this is readFile 1');
+// });
+
+// process.nextTick( () => console.log('this is process.nextTick 1'));
+// Promise.resolve().then( () =>  console.log('this is Promise.resolve 1'));
+
+
+/* ------------------------------------------------------- */
+/* Experiment 7 -  I/O Queue - 45  */
+// const fs = require('fs');
+
+// setTimeout(() => {
+//     console.log('this is setTimeout 1');
+// }, 0);
+
+// fs.readFile(__filename , () => {
+//     console.log('this is readFile 1');
+// });
+
+
+/* ------------------------------------------------------- */
+/* Experiment 8 -  I/O Queue - 45  */
+// const fs = require('fs');
+
+// fs.readFile(__filename , () => {
+//     console.log('this is readFile 1');
+// });
+
+// process.nextTick( () => console.log('this is process.nextTick 1'));
+// Promise.resolve().then( () =>  console.log('this is Promise.resolve 1'));
+
+// setTimeout(() => {
+//     console.log('this is setTimeout 1');
+// }, 0);
+
+/* ------------------------------------------------------- */
+/* Experiment 9 -  I/O Queue - 46  */
+// const fs = require('fs');
+
+// fs.readFile(__filename , () => {
+//     console.log('this is readFile 1');
+// });
+
+// process.nextTick( () => console.log('this is process.nextTick 1'));
+// Promise.resolve().then( () =>  console.log('this is Promise.resolve 1'));
+
+// setTimeout(() => {
+//     console.log('this is setTimeout 1');
+// }, 0);
+
+// setImmediate( () => console.log("this is setImmediate 1"));
+
+/* ------------------------------------------------------- */
+/* Experiment 10 and 11 -  Check Queue - 47  */
+
+// const fs = require('fs');
+
+// fs.readFile(__filename , () => {
+//     console.log('this is readFile 1');
+//     setImmediate( () => console.log("this is inner setImmediate inside readFile"));
+//     process.nextTick( () => 
+//     console.log('this is inner process.nextTick inside readFile')
+//     );
+//     Promise.resolve().then( () => 
+//     console.log('this is inner Promise.resolve inside readFile')
+//     );
+// });
+
+// process.nextTick( () => console.log('this is process.nextTick 1'));
+// Promise.resolve().then( () =>  console.log('this is Promise.resolve 1'));
+
+// setTimeout(() => {
+//     console.log('this is setTimeout 1');
+// }, 0);
+
+// for (let i = 0; i < 200000; i++) {}
+
+/* ------------------------------------------------------- */
+/* Experiment 12 -  Check Queue - 47  */
+
+// setImmediate( () => console.log("this is setImmediate 1"));
+// setImmediate( () => {
+//      console.log('this is setImmediate 2');
+//      process.nextTick( () => console.log('this is process.nextTick 1'));
+//      Promise.resolve().then( () =>  console.log('this is Promise.resolve 1'));
+// });
+// setImmediate( () => console.log("this is setImmediate 3"));
+
+/* ------------------------------------------------------- */
+/* Experiment 13 -  Check Queue - 47  */
+
+// setTimeout(() => {
+//     console.log('this is setTimeout 1');
+// }, 0);
+// setImmediate( () => console.log("this is setImmediate 1"));
+
+/* ------------------------------------------------------- */
+/* Experiment 14 -  Close Queue - 48  */
+
+// const fs = require('fs');
+
+// const readableStream = fs.createReadStream(__filename);
+// readableStream.close();
+
+// readableStream.on('close' , () => {
+//      console.log('this is from readableStream close event callback');
+// });
+
+// setImmediate( () => console.log("this is setImmediate 1"));
+// setTimeout(() => console.log('this is setTimeout 1'), 0);
+//  Promise.resolve().then( () =>  console.log('this is Promise.resolve 1'));
+// process.nextTick( () => console.log('this is process.nextTick 1'));
+
+
+
+
+
+
+
+
+
+
+
